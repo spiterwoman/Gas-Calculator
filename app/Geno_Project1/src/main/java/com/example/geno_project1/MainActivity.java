@@ -10,18 +10,20 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.text.NumberFormat;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-
     private EditText editDistance, editCPG, editHighwayMpg;
     private CheckBox cbAggressive;
     private RadioGroup rgNeedAc;
     private Spinner roadTypeSpinner;
     private SeekBar speedSeek;
     private TextView speedNumber, showResult;
+    private Button btnCalculate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +39,11 @@ public class MainActivity extends AppCompatActivity {
         speedSeek       = findViewById(R.id.speedSeek);
         speedNumber     = findViewById(R.id.tvSpeedNumber);
         showResult      = findViewById(R.id.showResult);
+        btnCalculate    = findViewById(R.id.btnCalculate);
 
-        //calculate button
-        Button btnCalculate = findViewById(R.id.btnCalculate);
-
-        int initialMph = progressToMph(speedSeek.getProgress());
-        speedNumber.setText(String.valueOf(initialMph));
-        speedSeek.setTooltipText(String.valueOf(initialMph));
-
+        // initial UI for speed
+        speedNumber.setText(String.valueOf(progressToMph(speedSeek.getProgress())));
+        speedSeek.setTooltipText(String.valueOf(progressToMph(speedSeek.getProgress())));
         speedSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 int mph = progressToMph(progress);
@@ -58,41 +57,34 @@ public class MainActivity extends AppCompatActivity {
         btnCalculate.setOnClickListener(v -> calculateAndDisplay());
     }
 
-    //Seekbar
-    private int progressToMph(int progress) {
-        return 35 + progress * 5;
-    }
+    private int progressToMph(int progress) { return 35 + progress * 5; }
 
-    // Calculation and display
     private void calculateAndDisplay() {
-        Double distance = readDouble(editDistance, getString(R.string.err_enter_distance));
-        Double costPerGallon = readDouble(editCPG, getString(R.string.err_enter_cpg));
-        Double highwayMpg = readDouble(editHighwayMpg, getString(R.string.err_enter_mpg));
+        Double distance = readDouble(editDistance, "Enter distance");
+        Double costPerGallon = readDouble(editCPG, "Enter cost per gallon");
+        Double highwayMpg = readDouble(editHighwayMpg, "Enter highway MPG");
         if (distance == null || costPerGallon == null || highwayMpg == null) return;
 
         int acChoiceId = rgNeedAc.getCheckedRadioButtonId();
         if (acChoiceId == View.NO_ID) {
-            Toast.makeText(this, R.string.err_select_ac, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please select Need A/C (Yes or No).", Toast.LENGTH_SHORT).show();
             return;
         }
 
         boolean aggressive = cbAggressive.isChecked();
-        boolean acOn = (acChoiceId == R.id.rgNeedAcYes);
+        boolean acOn = acChoiceId == R.id.rgNeedAcYes;
         String roadType = (roadTypeSpinner.getSelectedItem() != null)
                 ? roadTypeSpinner.getSelectedItem().toString()
-                : getString(R.string.road_highway);
+                : "Highway";
         int speed = progressToMph(speedSeek.getProgress());
 
         int modifier = 0;
-
         if (acOn) modifier += 15;
-
         if (speed > 50) {
             int over = speed - 50;
             modifier += (over / 5) * 5;
         }
 
-        //if aggressive is clicked
         if (aggressive) {
             switch (roadType) {
                 case "Highway": modifier += 15; break;
@@ -101,23 +93,22 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             switch (roadType) {
-                case "Highway": break;
+                case "Highway": modifier += 0;  break;
                 case "City":    modifier += 15; break;
                 case "Mixed":   modifier += 10; break;
             }
         }
 
-        //final mpg
         double finalMpg = highwayMpg * ((100 - modifier) / 100.0);
         if (finalMpg <= 0) {
-            showResult.setText(R.string.err_final_mpg_zero);
+            showResult.setText("Final MPG is <= 0. Enter a number > 0");
             return;
         }
 
         double gallons = (2.0 * distance) / finalMpg;
         double totalCost = gallons * costPerGallon;
         String amount = NumberFormat.getCurrencyInstance(Locale.US).format(totalCost);
-        showResult.setText(getString(R.string.result_with_amount, amount));
+        showResult.setText("You'll need to spend this much on a round trip:\n" + amount);
     }
 
     private Double readDouble(EditText et, String errorMsg) {
@@ -130,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             return Double.parseDouble(s);
         } catch (NumberFormatException e) {
-            et.setError(getString(R.string.err_invalid_number));
+            et.setError("Invalid number");
             et.requestFocus();
             return null;
         }

@@ -1,3 +1,41 @@
 <resources>
     <string name="app_name">Geno_Project1</string>
+
+    <!-- UI labels -->
+    <string name="title_gasoline_calculator">Gasoline Calculator</string>
+    <string name="label_distance">Distance</string>
+    <string name="label_cpg">Cost per Gallon</string>
+    <string name="label_highway_mpg">Highway MPG</string>
+    <string name="label_aggressive">Aggressive Driver?</string>
+    <string name="label_need_ac">Need A/C?</string>
+    <string name="label_road_type">Road Type</string>
+    <string name="label_average_speed">Average Speed</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <!-- Road type literals -->
+    <string name="road_highway">Highway</string>
+    <string name="road_city">City</string>
+    <string name="road_mixed">Mixed</string>
+
+    <!-- Hints -->
+    <string name="hint_distance">Please enter the distance</string>
+    <string name="hint_cpg">Please enter the cost per gallon</string>
+    <string name="hint_highway_mpg">Please enter the vehicle MPG</string>
+
+    <!-- Buttons & result -->
+    <string name="btn_calculate">Calculate!</string>
+    <string name="result_prefix">You will need to spend this much on a round trip: $0.00</string>
+    <string name="result_with_amount">You will need to spend this much on a round trip: %1$s</string>
+
+    <!-- Default speed -->
+    <string name="speed_default_number">55</string>
+
+    <!-- Errors / toasts -->
+    <string name="err_enter_distance">Enter distance</string>
+    <string name="err_enter_cpg">Enter cost per gallon</string>
+    <string name="err_enter_mpg">Enter highway MPG</string>
+    <string name="err_invalid_number">Invalid number</string>
+    <string name="err_select_ac">Please select Need A/C (Yes or No).</string>
+    <string name="err_final_mpg_zero">Final MPG is &lt;= 0. Enter a number &gt; 0.</string>
 </resources>

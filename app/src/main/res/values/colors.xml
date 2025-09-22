@@ -1,5 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="text_primary">#424242</color>
+    <color name="primary_purple">#6C4DF4</color>
+    <color name="seek_track_bg">#FFE0E0E0</color>
+    <color name="tick_grey">#FF9E9E9E</color>
 </resources>

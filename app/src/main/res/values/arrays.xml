@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <string-array name="road_types">
-            <item>Highway</item>
-            <item>City</item>
-            <item>Mixed</item>
-        </string-array>
+    <string-array name="road_types">
+        <item>@string/road_highway</item>
+        <item>@string/road_city</item>
+        <item>@string/road_mixed</item>
+    </string-array>
 </resources>

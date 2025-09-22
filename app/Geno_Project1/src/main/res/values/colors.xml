@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="app_bg">#F3ECFF</color>
+    <color name="primary_purple">#6C4AD0</color>
+    <color name="tick_grey">#9E9E9E</color>
+    <color name="text_dark">#424242</color>
+    <color name="seek_track_bg">#DDDDDD</color>
+    <color name="white">#FFFFFF</color>
+</resources>
